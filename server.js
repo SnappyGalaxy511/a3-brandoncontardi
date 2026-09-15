@@ -1,9 +1,10 @@
 require( 'dotenv' ).config()
 
-const express        = require( 'express' ),
+const express         = require( 'express' ),
       path            = require( 'path' ),
       bcrypt          = require( 'bcryptjs' ),
       mongoose        = require( 'mongoose' ),
+      { ServerApiVersion } = require( 'mongodb' ),
       session         = require( 'express-session' ),
       MongoStore      = require( 'connect-mongo' ),
       helmet          = require( 'helmet' ),
@@ -16,8 +17,12 @@ const express        = require( 'express' ),
       sessionSecret   = process.env.SESSION_SECRET || 'dev-secret-change-me'
 
 // family: 4 forces IPv4, which avoids a TLS handshake failure
-// (SSL alert number 80) seen on some hosts' IPv6 network paths to Atlas
-mongoose.connect( mongoUri, { family: 4 })
+// (SSL alert number 80) seen on some hosts' IPv6 network paths to Atlas.
+// serverApi pins requests to MongoDB's Stable API v1, as recommended by Atlas.
+mongoose.connect( mongoUri, {
+  family: 4,
+  serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true }
+})
   .then( function() { console.log( 'Connected to MongoDB' ) })
   .catch( function( err ) { console.error( 'MongoDB connection error:', err ) })
 
