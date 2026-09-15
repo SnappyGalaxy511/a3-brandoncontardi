@@ -34,7 +34,5 @@ those fields never have to be entered or stored redundantly.
   - `helmet` — sets a range of security-related HTTP response headers (CSP, etc.) to reduce common web vulnerabilities.
   - `morgan` — logs each incoming HTTP request to the console for debugging.
 
-## Post-implementation setup
-
-See the "After implementation" checklist below for what needs to be filled in before this runs (MongoDB Atlas
-connection string, session secret, and Render deployment env vars).
+## AI Usage
+AI was used to create this readme based off of the code. I checked to make sure the created readme was accurate to the code before submission.
