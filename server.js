@@ -15,7 +15,9 @@ const express        = require( 'express' ),
       mongoUri        = process.env.MONGODB_URI,
       sessionSecret   = process.env.SESSION_SECRET || 'dev-secret-change-me'
 
-mongoose.connect( mongoUri )
+// family: 4 forces IPv4, which avoids a TLS handshake failure
+// (SSL alert number 80) seen on some hosts' IPv6 network paths to Atlas
+mongoose.connect( mongoUri, { family: 4 })
   .then( function() { console.log( 'Connected to MongoDB' ) })
   .catch( function( err ) { console.error( 'MongoDB connection error:', err ) })
 
